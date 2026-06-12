@@ -18,13 +18,37 @@ class Program
             Console.WriteLine("\t3 - Division");
             Console.WriteLine("\t4 - Exponentiation");
             Console.WriteLine("\t5 - SquareRoot");
-            Console.WriteLine("\t6 - 10x");
+            Console.WriteLine("\t6 - Exponent10");
             Console.WriteLine("\t7 - Sin");
             Console.WriteLine("\t8 - Cos");
             Console.WriteLine("\t9 - Tan");
+            Console.WriteLine("\th - View operations history");
+            Console.WriteLine("\tq - Exit");
             Console.Write("Your option? ");
 
             string? op = Console.ReadLine();
+
+            if (op.ToLower() == "q")
+                break;
+
+            if(op.ToLower() == "h")
+            {
+                ShowOperationsHistory(calculator.GetOperations());
+
+                Console.WriteLine("------------------------\n");
+                Console.WriteLine("\td - Delete history");
+                Console.WriteLine("\tany key - Back to main menu");
+                Console.WriteLine("\n");
+
+                op = Console.ReadLine();
+                if (op.ToLower() == "d")
+                {
+                    calculator.DeleteHistory();
+                    Console.WriteLine("--- History deleted ---\n");
+                }
+                continue;
+
+            }
 
             int cleanOp = -1;
             while (!int.TryParse(op, out cleanOp) || cleanOp < 0 || cleanOp > 9)
@@ -80,13 +104,59 @@ class Program
             }
             Console.WriteLine("------------------------\n");
 
-            Console.Write("Press 'n' and Enter to close the app, or press any other key and Enter to continue: ");
-            if (Console.ReadLine() == "n") endApp = true;
+            Console.Write("Press 'q' and Enter to close the app, or press any other key and Enter to continue: ");
+            if (Console.ReadLine() == "q") endApp = true;
 
             Console.WriteLine("\n");
         }
 
         calculator.Finish();
         return;
+    }
+
+    private static void ShowOperationsHistory(List<Operation> previousOperations)
+    {
+        Console.WriteLine("------------------------\n");
+        Console.WriteLine("Operations history");
+        Console.WriteLine($"{previousOperations.Count} operations saved\n");
+        foreach (Operation operation in previousOperations)
+        {
+            switch(operation.@operator)
+            {
+                case Operator.Addition:
+                    Console.WriteLine($"\t{operation.number1} + {operation.number2} = {operation.result}");
+                    break;
+                case Operator.Substraction:
+                    Console.WriteLine($"\t{operation.number1} - {operation.number2} = {operation.result}");
+                    break;
+                case Operator.Multiplication:
+                    Console.WriteLine($"\t{operation.number1} * {operation.number2} = {operation.result}");
+                    break;
+                case Operator.Division:
+                    Console.WriteLine($"\t{operation.number1} / {operation.number2} = {operation.result}");
+                    break;
+                case Operator.Exponentiation:
+                    Console.WriteLine($"\t{operation.number1} ^ {operation.number2} = {operation.result}");
+                    break;
+                case Operator.SquareRoot:
+                    Console.WriteLine($"\t√ {operation.number1} = {operation.result}");
+                    break;
+                case Operator.Exponent10:
+                    Console.WriteLine($"\t10 ^ {operation.number1} = {operation.result}");
+                    break;
+                case Operator.Sin:
+                    Console.WriteLine($"\tsin {operation.number1} = {operation.result}");
+                    break;
+                case Operator.Cos:
+                    Console.WriteLine($"\tcos {operation.number1} = {operation.result}");
+                    break;
+                case Operator.Tan:
+                    Console.WriteLine($"\ttan {operation.number1} = {operation.result}");
+                    break;
+                default:
+                    break;
+            }
+        Console.WriteLine();
+        }
     }
 }

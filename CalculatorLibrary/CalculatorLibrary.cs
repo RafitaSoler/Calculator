@@ -8,7 +8,7 @@
         Division,
         Exponentiation,
         SquareRoot,
-        x10,
+        Exponent10,
         Sin,
         Cos,
         Tan
@@ -48,8 +48,8 @@
                 case Operator.SquareRoot:
                     result = Math.Sqrt(num1);
                     break;
-                case Operator.x10:
-                    result = num1 * 10;
+                case Operator.Exponent10:
+                    result = Math.Pow(10, num1);
                     break;
                 case Operator.Sin:
                     result = Math.Sin(num1);
@@ -70,6 +70,16 @@
         public void Finish()
         {
             logger.Log(previousOperations);
+        }
+
+        public List<Operation> GetOperations()
+        {
+            return previousOperations;
+        }
+
+        public void DeleteHistory()
+        {
+            previousOperations.Clear();
         }
     }
 }
