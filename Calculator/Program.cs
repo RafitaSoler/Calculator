@@ -28,6 +28,13 @@ class Program
 
             string? op = Console.ReadLine();
 
+            int cleanOp = -1;
+            while ((op.ToLower() != "q" && op.ToLower() != "h") && (!int.TryParse(op, out cleanOp) || cleanOp < 0 || cleanOp > 9))
+            {
+                Console.Write("This is not valid input. Please enter a valid option: ");
+                op = Console.ReadLine();
+            }
+
             if (op.ToLower() == "q")
                 break;
 
@@ -47,14 +54,6 @@ class Program
                     Console.WriteLine("--- History deleted ---\n");
                 }
                 continue;
-
-            }
-
-            int cleanOp = -1;
-            while (!int.TryParse(op, out cleanOp) || cleanOp < 0 || cleanOp > 9)
-            {
-                Console.Write("This is not valid input. Please enter a numeric value between 0 and 9: ");
-                op = Console.ReadLine();
             }
 
             string? numInput1 = "";
